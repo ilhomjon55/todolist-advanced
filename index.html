@@ -18,7 +18,7 @@
 
 
       <div class="container">
-         <h2 class="h1 text-center text-danger my-4">todos</h2>
+         <h2 class="h1 text-center text-danger my-3">todos</h2>
 
 
          <!-- ===========================
@@ -29,10 +29,10 @@
 
             <!-- Task input -->
             <input class="tasks__input form-control mb-1 form-control-lg js-tasks__input" type="text" name="user_task"
-               aria-label="Enter your text" placeholder="Enter your text" required>
+               aria-label="What you want to do" placeholder="What you want to do?" required>
 
             <!-- Ul of tasks -->
-            <ul class="tasks__list list-group-fluish list-unstyled js-tasks__list"></ul>
+            <ul class="tasks__list list-group-fluish list-unstyled js-tasks__list overflow-auto"></ul>
 
 
             <!-- Ul's bottom features -->
@@ -43,15 +43,16 @@
                </p>
 
                <div class="tasks__features-filter">
-                  <button class="tasks__filter-all btn  js-tasks__filter-all" type="button">All</button>
-                  <button class="tasks__filter-active btn  js-tasks__filter-active" type="button">Active</button>
-                  <button class="tasks__filter-completed btn  js-tasks__filter-completed"
+                  <button class="tasks__filter-all btn btn-outline-secondary  js-tasks__filter-all"
+                     type="button">All</button>
+                  <button class="tasks__filter-active btn btn-outline-primary  js-tasks__filter-active"
+                     type="button">Active</button>
+                  <button class="tasks__filter-completed btn btn-outline-success  js-tasks__filter-completed"
                      type="button">Completed</button>
                </div>
 
-               <button class="tasks__clear-completed btn js-tasks__clear-completed" type="button">Clear
+               <button class="tasks__clear-completed btn js-tasks__clear-completed btn-danger" type="button">Clear
                   completed</button>
-
             </div>
          </form>
       </div>
@@ -62,11 +63,15 @@
    <template id="todo__item-template">
 
       <li class="tasks__item list-group-item d-flex align-items-center p-2 border-right-0 border-left-0 border-top-0">
+
          <input class="tasks__completed-checkbox mr-3 flex-shrink-0" type="checkbox" name="task_completed"
             aria-label="Delete">
+
          <p class="tasks__text mr-auto m-0">Modul5 go</p>
+
          <button class="tasks__remove-btn btn text-danger font-weight-bold remove-task-btn"
             type="button">&times</button>
+
       </li>
 
    </template>

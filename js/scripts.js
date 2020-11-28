@@ -1,15 +1,16 @@
+// Get html elements
 var elFormTask = $_('.js-tasks__form')
 var elInputTask = $_('.js-tasks__input')
 var elTasksList = $_('.js-tasks__list')
 var elTasksleft = $_('.js-tasks__left')
 var elTaskTemplate = $_('#todo__item-template').content
 
+
+// Create empty array for tasks 
 var tasksArr = []
 
 
-
-
-
+// Create Tasks item
 var createTasksItem = (arr) => {
 
    elTask = elTaskTemplate.cloneNode(true)
@@ -20,7 +21,7 @@ var createTasksItem = (arr) => {
 }
 
 
-
+// Render tasks to document
 var renderTasks = (arr) => {
 
    elTasksList.innerHTML = ''
@@ -32,8 +33,6 @@ var renderTasks = (arr) => {
    })
 
    elTasksList.append(elTasksFragment)
-
-
 }
 
 
