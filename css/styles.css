@@ -42,6 +42,12 @@ img {
    overflow: auto;
 }
 
+.tasks__text::-webkit-scrollbar {
+   width: 0px;
+   background: transparent;
+   /* make scrollbar transparent */
+}
+
 .remove-task-btn {
    font-size: 25px;
 }

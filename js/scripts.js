@@ -36,11 +36,11 @@ var renderTasks = (arr) => {
 }
 
 
-
+// Listen submit of elFormTask 
 elFormTask.addEventListener('submit', (evt) => {
    evt.preventDefault()
 
-
+   // Get value of inputTask
    var inputTask = elInputTask.value.trim()
 
    // Prevent empty value
@@ -49,13 +49,14 @@ elFormTask.addEventListener('submit', (evt) => {
       return
    }
 
-
+   // Create and push task object
    tasksArr.push({
       id: 1,
       taskText: inputTask,
       completed: false
    })
 
+   // Add id to task object
    tasksArr.forEach((task, index) => {
       task.id = index + 1
    })
@@ -63,6 +64,7 @@ elFormTask.addEventListener('submit', (evt) => {
 
    renderTasks(tasksArr)
 
+   // Little UI feature
    elInputTask.value = ''
    elInputTask.focus()
 })
