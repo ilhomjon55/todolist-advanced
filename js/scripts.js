@@ -11,18 +11,19 @@ var tasksArr = []
 
 
 // Create Tasks item
-var createTasksItem = (arr) => {
+var createTasksItem = arr => {
 
    elTask = elTaskTemplate.cloneNode(true)
 
    $_('.tasks__text', elTask).textContent = arr.taskText
+   $_('.js-remove-task-btn', elTask).dataset.Id = arr.id
 
    return elTask
 }
 
 
 // Render tasks to document
-var renderTasks = (arr) => {
+var renderTasks = arr => {
 
    elTasksList.innerHTML = ''
 
@@ -37,7 +38,7 @@ var renderTasks = (arr) => {
 
 
 // Listen submit of elFormTask 
-elFormTask.addEventListener('submit', (evt) => {
+elFormTask.addEventListener('submit', evt => {
    evt.preventDefault()
 
    // Get value of inputTask
@@ -67,4 +68,24 @@ elFormTask.addEventListener('submit', (evt) => {
    // Little UI feature
    elInputTask.value = ''
    elInputTask.focus()
+})
+
+
+
+// Listen click of elTasksList to delete tasks
+elTasksList.addEventListener('click', evt => {
+
+   if (evt.target.matches('.js-remove-task-btn')) {
+
+      // Delete element
+      evt.target.closest('li').remove()
+
+      // Find element form array and splice
+      var foundTaskIndex = tasksArr.findIndex(task => {
+         return task.id === evt.target.dataset.id
+      })
+
+      tasksArr.splice(foundTaskIndex, 1)
+
+   }
 })
