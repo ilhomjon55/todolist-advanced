@@ -3,6 +3,7 @@ var elFormTask = $_('.js-tasks__form')
 var elInputTask = $_('.js-tasks__input')
 var elTasksList = $_('.js-tasks__list')
 var elTasksleft = $_('.js-tasks__left')
+var elTaskCheck = $$_('.tasks__completed-checkbox')
 var elTaskTemplate = $_('#todo__item-template').content
 
 
@@ -65,11 +66,13 @@ elFormTask.addEventListener('submit', (evt) => {
    // Little UI feature
    elInputTask.value = ''
    elInputTask.focus()
+
 })
 
 
 // Listen click of elTasksList to delete task ================
 elTasksList.addEventListener('click', (evt) => {
+
    if (evt.target.matches('.js-remove-task-btn')) {
       // Delete element
       evt.target.closest('li').remove()
@@ -80,5 +83,7 @@ elTasksList.addEventListener('click', (evt) => {
       })
 
       tasksArr.splice(foundTaskIndex, 1)
+
    }
+
 })
