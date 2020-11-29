@@ -48,7 +48,7 @@ elFormTask.addEventListener('submit', (evt) => {
 	tasksArr.push({
 		id: 1,
 		taskText: inputTask,
-		completed: false,
+		completed: false
 	})
 
 	// Add id to task object
