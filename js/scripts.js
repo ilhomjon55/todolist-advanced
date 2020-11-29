@@ -63,7 +63,7 @@ elFormTask.addEventListener('submit', (evt) => {
 	elInputTask.focus()
 })
 
-// Listen click of elTasksList to delete tasks
+// Listen click of elTasksList to delete task
 elTasksList.addEventListener('click', (evt) => {
 	if (evt.target.matches('.js-remove-task-btn')) {
 		// Delete element
