@@ -1,15 +1,14 @@
 // Create empty array for tasks
-var tasksArr = []
-
+var tasksArr = JSON.parse(localStorage.getItem('tasks')) || []
 
 // Increment index to set on localStorage
 var taskLocalIndex = Number(localStorage.getItem('taskIndex'))
 
-// Update taskLocalIndex to localStorage
-var updateTaskLocalIndex = () => {
+// Update storage to localStorage
+var updateStorageLocal = () => {
+   localStorage.setItem('tasks', JSON.stringify(tasksArr))
    localStorage.setItem('taskIndex', taskLocalIndex)
 }
-// localStorage.clear()
 
 
 // Get html elements
@@ -17,8 +16,8 @@ var elFormTask = $_('.js-tasks__form')
 var elInputTask = $_('.js-tasks__input')
 var elTasksList = $_('.js-tasks__list')
 var elTasksleft = $_('.js-tasks__left')
-var elsCheckCompleted = $$_('.tasks__completed-checkbox')
 var elTaskTemplate = $_('#todo__item-template').content
+var elTasksFilterBox = $_('.tasks__filter-btns-box')
 
 
 // Create Tasks item
@@ -37,6 +36,7 @@ var createTasksItem = (task) => {
    if (task.completed) {
       $_('.tasks__text', elTask).classList.add('del')
    }
+
    return elTask
 }
 
@@ -67,6 +67,17 @@ var renderTasks = (arr) => {
 }
 
 
+// Tasks left function
+var showTasksUndone = () => {
+
+   var tasksUndone = tasksArr.filter(task => {
+      return task.completed === false
+   })
+
+   elTasksleft.textContent = tasksUndone.length
+}
+
+
 // Create callback function to submit of elFormTask
 var onElFormTaskSubmit = (evt) => {
    evt.preventDefault()
@@ -82,21 +93,27 @@ var onElFormTaskSubmit = (evt) => {
 
 
    createTasksToArray(inputTask)
+   updateStorageLocal()
    renderTasks(tasksArr)
-   updateTaskLocalIndex()
-   console.log(tasksArr)
 
 
    // Little UI feature
    elInputTask.value = ''
    elInputTask.focus()
 
+   showTasksUndone()
 
 }
 
 
 // Listen submit of elFormTask and assign callback function
 elFormTask.addEventListener('submit', onElFormTaskSubmit)
+
+// Render Tasks to show tasks sharply after reload
+renderTasks(tasksArr)
+
+showTasksUndone()
+
 
 
 // Listen click of elTasksList to delete task
@@ -112,21 +129,63 @@ elTasksList.addEventListener('click', (evt) => {
       })
 
       tasksArr.splice(foundTaskIndex, 1)
-      updateTaskLocalIndex()
+
+      updateStorageLocal()
 
    } else if (evt.target.matches('.tasks__completed-checkbox')) {
 
-      var idOfCopletedTask = Number(evt.target.dataset.todoId)
+      // Assign target checkbox's id to new binding
+      var taskDoneId = Number(evt.target.dataset.todoId)
 
+      // Find when checkbox is checked
       if (evt.target.checked) {
-         var completedTask = tasksArr.find(task => {
-            return idOfCopletedTask === task.id
+         var taskDone = tasksArr.find(task => {
+            return taskDoneId === task.id
          })
 
-         completedTask.completed = !completedTask.completed
-         updateTaskLocalIndex()
+         // Assign it to vice verca when it checked
+         taskDone.completed = !taskDone.completed
+         updateStorageLocal()
       }
 
+      // Toggle class to task element
       evt.target.closest('div').nextElementSibling.classList.toggle('del')
+
+      showTasksUndone()
+
    }
 })
+
+updateStorageLocal()
+elTasksFilterBox.addEventListener('click', evt => {
+   if (evt.target.matches('.js-tasks__filter-all')) {
+
+      renderTasks(tasksArr)
+
+   } else if (evt.target.matches('.js-tasks__filter-active')) {
+
+      activeTasksArr = tasksArr.filter(task => {
+         return task.completed === false
+      })
+
+      renderTasks(activeTasksArr)
+
+   } else if (evt.target.matches('.js-tasks__filter-completed')) {
+
+      doneTasksArr = tasksArr.filter(task => {
+         return task.completed === true
+      })
+
+      renderTasks(doneTasksArr)
+
+   } else if (evt.target.matches('.js-tasks__clear-completed')) {
+
+      updateStorageLocal()
+      localStorage.clear()
+      elTasksList.innerHTML = ''
+   }
+
+
+})
+
+updateStorageLocal()
