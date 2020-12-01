@@ -63,7 +63,7 @@ img {
 
 .del {
 	text-decoration: line-through;
-	color: #cccccc;
+	color: #999999;
 }
 
 .tasks__remove-btn {
