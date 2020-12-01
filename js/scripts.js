@@ -111,7 +111,7 @@ elFormTask.addEventListener('submit', onElFormTaskSubmit)
 
 // Render Tasks to show tasks sharply after reload
 renderTasks(tasksArr)
-
+updateStorageLocal()
 showTasksUndone()
 
 
@@ -146,6 +146,15 @@ elTasksList.addEventListener('click', (evt) => {
          // Assign it to vice verca when it checked
          taskDone.completed = !taskDone.completed
          updateStorageLocal()
+
+      } else {
+         var taskDone = tasksArr.find(task => {
+            return taskDoneId === task.id
+         })
+
+         // Assign it to vice verca when it checked
+         taskDone.completed = !taskDone.completed
+         updateStorageLocal()
       }
 
       // Toggle class to task element
@@ -156,14 +165,16 @@ elTasksList.addEventListener('click', (evt) => {
    }
 })
 
-updateStorageLocal()
+
+// Delege click event among btns of elTasksFilterBox
 elTasksFilterBox.addEventListener('click', evt => {
    if (evt.target.matches('.js-tasks__filter-all')) {
-
+      // Render all
       renderTasks(tasksArr)
 
    } else if (evt.target.matches('.js-tasks__filter-active')) {
 
+      // Filter active tasks and render
       activeTasksArr = tasksArr.filter(task => {
          return task.completed === false
       })
@@ -172,6 +183,7 @@ elTasksFilterBox.addEventListener('click', evt => {
 
    } else if (evt.target.matches('.js-tasks__filter-completed')) {
 
+      // Filter done tasks and render
       doneTasksArr = tasksArr.filter(task => {
          return task.completed === true
       })
@@ -180,6 +192,7 @@ elTasksFilterBox.addEventListener('click', evt => {
 
    } else if (evt.target.matches('.js-tasks__clear-completed')) {
 
+      // Clear local storage and make everything empty
       updateStorageLocal()
       localStorage.clear()
       elTasksList.innerHTML = ''
@@ -187,5 +200,3 @@ elTasksFilterBox.addEventListener('click', evt => {
 
 
 })
-
-updateStorageLocal()
